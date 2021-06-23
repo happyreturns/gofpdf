@@ -3,11 +3,9 @@ github.com/boombuler/barcode v1.0.1 h1:NDBbPmhS+EqABEs5Kg3n/5ZNjy73Pz7SIV+KCeqyX
 github.com/boombuler/barcode v1.0.1/go.mod h1:paBWMcWSl3LHKBqUq+rly7CNSldXjb2rDl3JlRe0mD8=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/happyreturns/gofpdi v1.0.13-hr-5527 h1:+x1Y34XBAEcoxBYnZHY/CzH1fXVGfYLH8PVwuU0XuCU=
-github.com/happyreturns/gofpdi v1.0.13-hr-5527/go.mod h1:1N5SNCMeNr6XhsfLSibEB2i+v/Uo5U+QGZ0tGPdgiBQ=
+github.com/happyreturns/gofpdi v1.0.13-hr-5527-3 h1:Rg3vspGBZ9tQIgA65qpyuWsVKkGScHHRZbgarWwE4cA=
+github.com/happyreturns/gofpdi v1.0.13-hr-5527-3/go.mod h1:1N5SNCMeNr6XhsfLSibEB2i+v/Uo5U+QGZ0tGPdgiBQ=
 github.com/jung-kurt/gofpdf v1.0.0/go.mod h1:7Id9E/uU8ce6rXgefFLlgrJj/GYY22cpxn+r32jIOes=
-github.com/lawjonathan17/gofpdi v1.0.16 h1:V6vlRNWkOoHNLwJg2U9dyrdHKhbIam1F+2JhnYP5EtI=
-github.com/lawjonathan17/gofpdi v1.0.16/go.mod h1:9993WBzqrY6owAtrJOpDIulrKtfZM/WmSLYtmuhWBUY=
 github.com/phpdave11/gofpdf v1.4.2/go.mod h1:zpO6xFn9yxo3YLyMvW8HcKWVdbNqgIfOOp2dXMnm1mY=
 github.com/phpdave11/gofpdi v1.0.12/go.mod h1:vBmVV0Do6hSBHC8uKUQ71JGW+ZGQq74llk/7bXwjDoI=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
