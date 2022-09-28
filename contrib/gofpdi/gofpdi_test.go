@@ -2,7 +2,6 @@ package gofpdi
 
 import (
 	"bytes"
-	"context"
 	"io"
 	"sync"
 	"testing"
@@ -21,10 +20,8 @@ func ExampleNewImporter() error {
 	// create a new Importer instance
 	imp := NewImporter()
 
-	ctx := context.Background()
-
 	// import first page and determine page sizes
-	tpl, err := imp.ImportPageFromStream(ctx, pdf, &rs, 1, "/MediaBox")
+	tpl, err := imp.ImportPageFromStream(pdf, &rs, 1, "/MediaBox")
 	if err != nil {
 		return err
 	}
@@ -36,7 +33,7 @@ func ExampleNewImporter() error {
 	for i := 1; i <= nrPages; i++ {
 		pdf.AddPage()
 		if i > 1 {
-			tpl, err = imp.ImportPageFromStream(ctx, pdf, &rs, i, "/MediaBox")
+			tpl, err = imp.ImportPageFromStream(pdf, &rs, i, "/MediaBox")
 			if err != nil {
 				return err
 			}
@@ -55,7 +52,6 @@ func ExampleNewImporter() error {
 
 func TestGofpdiConcurrent(t *testing.T) {
 	wg := sync.WaitGroup{}
-	ctx := context.Background()
 	for i := 0; i < 100; i++ {
 		wg.Add(1)
 		go func() {
@@ -64,7 +60,7 @@ func TestGofpdiConcurrent(t *testing.T) {
 			pdf.AddPage()
 			rs, _ := getTemplatePdf()
 			imp := NewImporter()
-			tpl, err := imp.ImportPageFromStream(ctx, pdf, &rs, 1, "/MediaBox")
+			tpl, err := imp.ImportPageFromStream(pdf, &rs, 1, "/MediaBox")
 			if err != nil {
 				t.Fail()
 			}
