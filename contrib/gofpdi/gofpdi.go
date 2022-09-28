@@ -9,6 +9,7 @@ however that use of the default Importer is not thread safe.
 package gofpdi
 
 import (
+	"context"
 	"fmt"
 	"io"
 
@@ -40,27 +41,27 @@ func NewImporter() *Importer {
 // ImportPage imports a page of a PDF file with the specified box (/MediaBox,
 // /TrimBox, /ArtBox, /CropBox, or /BleedBox). Returns a template id that can
 // be used with UseImportedTemplate to draw the template onto the page.
-func (i *Importer) ImportPage(f gofpdiPdf, sourceFile string, pageno int, box string) (int, error) {
+func (i *Importer) ImportPage(ctx context.Context, f gofpdiPdf, sourceFile string, pageno int, box string) (int, error) {
 	// Set source file for fpdi
 	i.fpdi.SetSourceFile(sourceFile)
 	// return template id
-	return i.getTemplateID(f, pageno, box)
+	return i.getTemplateID(ctx, f, pageno, box)
 }
 
 // ImportPageFromStream imports a page of a PDF with the specified box
 // (/MediaBox, TrimBox, /ArtBox, /CropBox, or /BleedBox). Returns a template id
 // that can be used with UseImportedTemplate to draw the template onto the
 // page.
-func (i *Importer) ImportPageFromStream(f gofpdiPdf, rs *io.ReadSeeker, pageno int, box string) (int, error) {
+func (i *Importer) ImportPageFromStream(ctx context.Context, f gofpdiPdf, rs *io.ReadSeeker, pageno int, box string) (int, error) {
 	// Set source stream for fpdi
 	i.fpdi.SetSourceStream(rs)
 	// return template id
-	return i.getTemplateID(f, pageno, box)
+	return i.getTemplateID(ctx, f, pageno, box)
 }
 
-func (i *Importer) getTemplateID(f gofpdiPdf, pageno int, box string) (int, error) {
+func (i *Importer) getTemplateID(ctx context.Context, f gofpdiPdf, pageno int, box string) (int, error) {
 	// Import page
-	tpl, err := i.fpdi.ImportPage(pageno, box)
+	tpl, err := i.fpdi.ImportPage(ctx, pageno, box)
 	if err != nil {
 		return 0, fmt.Errorf("getTemplateID - import page: %s", err)
 	}
@@ -115,8 +116,8 @@ var fpdi = NewImporter()
 // /TrimBox, /ArtBox, /CropBox, or /BleedBox). Returns a template id that can
 // be used with UseImportedTemplate to draw the template onto the page.
 // Note: This uses the default Importer. Call NewImporter() to obtain a custom Importer.
-func ImportPage(f gofpdiPdf, sourceFile string, pageno int, box string) (int, error) {
-	return fpdi.ImportPage(f, sourceFile, pageno, box)
+func ImportPage(ctx context.Context, f gofpdiPdf, sourceFile string, pageno int, box string) (int, error) {
+	return fpdi.ImportPage(ctx, f, sourceFile, pageno, box)
 }
 
 // ImportPageFromStream imports a page of a PDF with the specified box
@@ -124,8 +125,8 @@ func ImportPage(f gofpdiPdf, sourceFile string, pageno int, box string) (int, er
 // that can be used with UseImportedTemplate to draw the template onto the
 // page.
 // Note: This uses the default Importer. Call NewImporter() to obtain a custom Importer.
-func ImportPageFromStream(f gofpdiPdf, rs *io.ReadSeeker, pageno int, box string) (int, error) {
-	return fpdi.ImportPageFromStream(f, rs, pageno, box)
+func ImportPageFromStream(ctx context.Context, f gofpdiPdf, rs *io.ReadSeeker, pageno int, box string) (int, error) {
+	return fpdi.ImportPageFromStream(ctx, f, rs, pageno, box)
 }
 
 // UseImportedTemplate draws the template onto the page at x,y. If w is 0, the
