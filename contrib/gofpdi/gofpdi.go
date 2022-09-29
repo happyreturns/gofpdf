@@ -59,10 +59,17 @@ func (i *Importer) ImportPageFromStream(f gofpdiPdf, rs *io.ReadSeeker, pageno i
 }
 
 func (i *Importer) getTemplateID(f gofpdiPdf, pageno int, box string) (int, error) {
+	var ascii85Err error
+
 	// Import page
 	tpl, err := i.fpdi.ImportPage(pageno, box)
 	if err != nil {
-		return 0, fmt.Errorf("getTemplateID - import page: %s", err)
+		switch err.(type) {
+		case *realgofpdi.Ascii85DecodeError:
+			ascii85Err = err
+		default:
+			return 0, fmt.Errorf("getTemplateID - import page: %s", err)
+		}
 	}
 	// Import objects into current pdf document
 	// Unordered means that the objects will be returned with a sha1 hash instead of an integer
@@ -86,6 +93,9 @@ func (i *Importer) getTemplateID(f gofpdiPdf, pageno int, box string) (int, erro
 	// Import gofpdi object hashes and their positions into gopdf
 	f.ImportObjPos(importedObjPos)
 
+	if ascii85Err != nil {
+		return tpl, ascii85Err
+	}
 	return tpl, nil
 }
 
