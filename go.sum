@@ -6,6 +6,14 @@ github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/happyreturns/gofpdi v1.1.1 h1:/bd8Kur6Dg70fLWC3aiW79M7VejwoBjciVQ7Lh9LUH0=
 github.com/happyreturns/gofpdi v1.1.1/go.mod h1:OQpkEZCrgPGPMRTVmmNxCwlteRUT//m1DgB3GvwVTlQ=
+github.com/happyreturns/gofpdi v1.1.2-0.20230925193918-259fc73a1f47 h1:cVeO9WJQCwAT5Rc+Oy8hEFaJKbcxQlHx7CcSIHN6ez0=
+github.com/happyreturns/gofpdi v1.1.2-0.20230925193918-259fc73a1f47/go.mod h1:OQpkEZCrgPGPMRTVmmNxCwlteRUT//m1DgB3GvwVTlQ=
+github.com/happyreturns/gofpdi v1.1.2-0.20230925194455-cf0efd2102c2 h1:IzxjU3zNDiYpn/r4SJJgDSO0CIuWjaBqlHCD9pDOTqE=
+github.com/happyreturns/gofpdi v1.1.2-0.20230925194455-cf0efd2102c2/go.mod h1:OQpkEZCrgPGPMRTVmmNxCwlteRUT//m1DgB3GvwVTlQ=
+github.com/happyreturns/gofpdi v1.1.2-0.20230925200034-e232e2294f70 h1:3XvNXq7nJOK4pyIulZy+K2RjQJdiR7PObgM78mnUG2I=
+github.com/happyreturns/gofpdi v1.1.2-0.20230925200034-e232e2294f70/go.mod h1:OQpkEZCrgPGPMRTVmmNxCwlteRUT//m1DgB3GvwVTlQ=
+github.com/happyreturns/gofpdi v1.1.2-0.20230925201504-10b6c98959bf h1:xtYR9eCGhps2HeRxZBmR8WIp8gRCchgB21ZBGTl0fAM=
+github.com/happyreturns/gofpdi v1.1.2-0.20230925201504-10b6c98959bf/go.mod h1:OQpkEZCrgPGPMRTVmmNxCwlteRUT//m1DgB3GvwVTlQ=
 github.com/jung-kurt/gofpdf v1.0.0/go.mod h1:7Id9E/uU8ce6rXgefFLlgrJj/GYY22cpxn+r32jIOes=
 github.com/phpdave11/gofpdf v1.4.2/go.mod h1:zpO6xFn9yxo3YLyMvW8HcKWVdbNqgIfOOp2dXMnm1mY=
 github.com/phpdave11/gofpdi v1.0.12/go.mod h1:vBmVV0Do6hSBHC8uKUQ71JGW+ZGQq74llk/7bXwjDoI=
