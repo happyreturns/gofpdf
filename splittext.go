@@ -51,3 +51,58 @@ func (f *Fpdf) SplitText(txt string, w float64) (lines []string) {
 	}
 	return lines
 }
+
+func (f *Fpdf) SplitTextPackingslip(txt string, w float64) (lines []string) {
+	cw := f.currentFont.Cw
+	wmax := int(math.Ceil((w - 2*f.cMargin) * 1000 / f.fontSize))
+	s := []rune(txt) // Return slice of UTF-8 runes
+	nb := len(s)
+	for nb > 0 && s[nb-1] == '\n' {
+		nb--
+	}
+	s = s[0:nb]
+	sep := -1
+	i := 0
+	j := 0
+	l := 0
+
+	maxRuneWidth := 0
+	for _, width := range cw {
+		maxRuneWidth = max(maxRuneWidth, width)
+	}
+
+	for i < nb {
+		c := s[i]
+
+		runeInteger := int(c)
+		if runeInteger < len(cw) {
+			l += cw[c]
+		} else {
+			l += maxRuneWidth
+		}
+
+		if unicode.IsSpace(c) || isChinese(c) {
+			sep = i
+		}
+		if c == '\n' || l > wmax {
+			if sep == -1 {
+				if i == j {
+					i++
+				}
+				sep = i
+			} else {
+				i = sep + 1
+			}
+			lines = append(lines, string(s[j:sep]))
+			sep = -1
+			j = i
+			l = 0
+		} else {
+			i++
+		}
+	}
+	if i != j {
+		lines = append(lines, string(s[j:i]))
+	}
+	return lines
+}
