@@ -1,0 +1,4 @@
+# For security of github workflows infrastructure must own CODEOWNERS and .github/workflows dir
+# IMPORTANT: This must be at the bottom of the CODEOWNERS file
+/.github/workflows @happyreturns/infrastructure-team
+CODEOWNERS @happyreturns/infrastructure-team
