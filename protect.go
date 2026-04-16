@@ -20,8 +20,14 @@
 package gofpdf
 
 import (
+	"crypto/md5" //nolint:gosec // MD5 is required by the PDF Standard Security Handler algorithm
+	// (ISO 32000-1 §7.6.3). This is a spec-mandated usage, not a
+	// general-purpose security choice. The Veracode CWE-327 finding for
+	// this file (CF-6624) must be mitigated at the Veracode platform level
+	// as "Mitigated by Design": the RC4+MD5 key derivation is defined by
+	// the PDF 1.x specification and cannot be replaced without breaking
+	// compatibility with all conforming PDF readers.
 	"crypto/rc4"
-	"crypto/sha256"
 	"encoding/binary"
 	"math/rand"
 )
@@ -60,13 +66,13 @@ func (p *protectType) objectKey(n uint32) []byte {
 	binary.LittleEndian.PutUint32(nbuf, n)
 	b = append(b, p.encryptionKey...)
 	b = append(b, nbuf[0], nbuf[1], nbuf[2], 0, 0)
-	s := sha256.Sum256(b)
+	s := md5.Sum(b) //nolint:gosec // spec-mandated: ISO 32000-1 §7.6.3.3 Algorithm 1
 	return s[0:10]
 }
 
 func oValueGen(userPass, ownerPass []byte) (v []byte) {
 	var c *rc4.Cipher
-	tmp := sha256.Sum256(ownerPass)
+	tmp := md5.Sum(ownerPass) //nolint:gosec // spec-mandated: ISO 32000-1 §7.6.3.4 Algorithm 3 step (a)
 	c, _ = rc4.NewCipher(tmp[0:5])
 	size := len(userPass)
 	v = make([]byte, size, size)
@@ -107,7 +113,7 @@ func (p *protectType) setProtection(privFlag byte, userPassStr, ownerPassStr str
 	buf = append(buf, userPass...)
 	buf = append(buf, p.oValue...)
 	buf = append(buf, privFlag, 0xff, 0xff, 0xff)
-	sum := sha256.Sum256(buf)
+	sum := md5.Sum(buf) //nolint:gosec // spec-mandated: ISO 32000-1 §7.6.3.3 Algorithm 2 step (d)
 	p.encryptionKey = sum[0:5]
 	p.uValue = p.uValueGen()
 	p.pValue = -(int(privFlag^255) + 1)
