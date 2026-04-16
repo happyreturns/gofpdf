@@ -1,7 +1,7 @@
 package gofpdf
 
 import (
-	"crypto/md5"
+	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
 	"strings"
@@ -26,16 +26,12 @@ type Attachment struct {
 
 // return the hex encoded checksum of `data`
 func checksum(data []byte) string {
-	tmp := md5.Sum(data)
-	sl := make([]byte, len(tmp))
-	for i, v := range tmp {
-		sl[i] = v
-	}
-	return hex.EncodeToString(sl)
+	tmp := sha256.Sum256(data)
+	return hex.EncodeToString(tmp[:])
 }
 
 // Writes a compressed file like object as ``/EmbeddedFile``. Compressing is
-// done with deflate. Includes length, compressed length and MD5 checksum.
+// done with deflate. Includes length, compressed length and SHA-256 checksum.
 func (f *Fpdf) writeCompressedFileObject(content []byte) {
 	lenUncompressed := len(content)
 	sum := checksum(content)
