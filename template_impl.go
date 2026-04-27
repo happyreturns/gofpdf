@@ -2,7 +2,7 @@ package gofpdf
 
 import (
 	"bytes"
-	"crypto/sha1"
+	"crypto/sha256"
 	"encoding/gob"
 	"errors"
 	"fmt"
@@ -65,7 +65,7 @@ type FpdfTpl struct {
 
 // ID returns the global template identifier
 func (t *FpdfTpl) ID() string {
-	return fmt.Sprintf("%x", sha1.Sum(t.Bytes()))
+	return fmt.Sprintf("%x", sha256.Sum256(t.Bytes()))
 }
 
 // Size gives the bounding dimensions of this template

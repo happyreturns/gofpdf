@@ -3272,7 +3272,7 @@ func (f *Fpdf) ImportObjPos(objPos map[string]map[int]string) {
 func (f *Fpdf) putImportedTemplates() {
 	nOffset := f.n + 1
 
-	// keep track of list of sha1 hashes (to be replaced with integers)
+	// keep track of list of sha256 hashes (to be replaced with integers)
 	objsIDHash := make([]string, len(f.importedObjs))
 
 	// actual object data with new id
@@ -3299,14 +3299,14 @@ func (f *Fpdf) putImportedTemplates() {
 		hash := objsIDHash[i]
 
 		for pos, h := range f.importedObjPos[hash] {
-			// Convert object id into a 40 character string padded with spaces
-			objIDPadded := fmt.Sprintf("%40s", fmt.Sprintf("%d", hashToObjID[h]))
+			// Convert object id into a 64 character string padded with spaces
+			objIDPadded := fmt.Sprintf("%64s", fmt.Sprintf("%d", hashToObjID[h]))
 
 			// Convert objIDPadded into []byte
 			objIDBytes := []byte(objIDPadded)
 
-			// Replace sha1 hash with object id padded
-			for j := pos; j < pos+40; j++ {
+			// Replace sha256 hash with object id padded
+			for j := pos; j < pos+64; j++ {
 				objsIDData[i][j] = objIDBytes[j-pos]
 			}
 		}
@@ -4470,7 +4470,7 @@ func (f *Fpdf) putxobjectdict() {
 	}
 	{
 		for tplName, objID := range f.importedTplObjs {
-			// here replace obj id hash with n
+			// here replace obj id sha256 hash with n
 			f.outf("%s %d 0 R", tplName, f.importedTplIDs[objID])
 		}
 	}
