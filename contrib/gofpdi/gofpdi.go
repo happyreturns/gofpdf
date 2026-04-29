@@ -72,7 +72,7 @@ func (i *Importer) getTemplateID(f gofpdiPdf, pageno int, box string) (int, erro
 		}
 	}
 	// Import objects into current pdf document
-	// Unordered means that the objects will be returned with a sha1 hash instead of an integer
+	// Unordered means that the objects will be returned with a sha256 hash instead of an integer
 	// The objects themselves may have references to other hashes which will be replaced in ImportObjects()
 	tplObjIDs := i.fpdi.PutFormXobjectsUnordered()
 

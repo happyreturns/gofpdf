@@ -18,7 +18,7 @@ package gofpdf
 
 import (
 	"bytes"
-	"crypto/sha1"
+	"crypto/sha256"
 	"encoding/gob"
 	"encoding/json"
 	"fmt"
@@ -178,12 +178,12 @@ type ImageInfoType struct {
 	trns  []int   // Transparency mask
 	scale float64 // Document scale factor
 	dpi   float64 // Dots-per-inch found from image file (png only)
-	i     string  // SHA-1 checksum of the above values.
+	i     string  // SHA-256 checksum of the above values.
 }
 
 func generateImageID(info *ImageInfoType) (string, error) {
 	b, err := info.GobEncode()
-	return fmt.Sprintf("%x", sha1.Sum(b)), err
+	return fmt.Sprintf("%x", sha256.Sum256(b)), err
 }
 
 // GobEncode encodes the receiving image to a byte slice.
@@ -720,7 +720,7 @@ func generateFontID(fdt fontDefType) (string, error) {
 	// file can be different if generated in different instance
 	fdt.File = ""
 	b, err := json.Marshal(&fdt)
-	return fmt.Sprintf("%x", sha1.Sum(b)), err
+	return fmt.Sprintf("%x", sha256.Sum256(b)), err
 }
 
 type fontInfoType struct {
