@@ -10,12 +10,15 @@ import (
 	"github.com/happyreturns/gofpdf/internal/example"
 )
 
-func ExampleNewImporter() error {
+func ExampleNewImporter() {
 	// create new pdf
 	pdf := gofpdf.New("P", "pt", "A4", "")
 
 	// for testing purposes, get an arbitrary template pdf as stream
-	rs, _ := getTemplatePdf()
+	rs, err := getTemplatePdf()
+	if err != nil {
+		panic(err)
+	}
 
 	// create a new Importer instance
 	imp := NewImporter()
@@ -23,7 +26,7 @@ func ExampleNewImporter() error {
 	// import first page and determine page sizes
 	tpl, err := imp.ImportPageFromStream(pdf, &rs, 1, "/MediaBox")
 	if err != nil {
-		return err
+		panic(err)
 	}
 
 	pageSizes := imp.GetPageSizes()
@@ -35,7 +38,7 @@ func ExampleNewImporter() error {
 		if i > 1 {
 			tpl, err = imp.ImportPageFromStream(pdf, &rs, i, "/MediaBox")
 			if err != nil {
-				return err
+				panic(err)
 			}
 		}
 		imp.UseImportedTemplate(pdf, tpl, 0, 0, pageSizes[i]["/MediaBox"]["w"], pageSizes[i]["/MediaBox"]["h"])
@@ -47,7 +50,6 @@ func ExampleNewImporter() error {
 	example.Summary(err, fileStr)
 	// Output:
 	// Successfully generated ../../pdf/contrib_gofpdi_Importer.pdf
-	return nil
 }
 
 func TestGofpdiConcurrent(t *testing.T) {
